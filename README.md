@@ -7,7 +7,6 @@ This directory contains Fastlane configuration files for automating iOS and Andr
 ```
 fastlane/
 ├── Fastfile              # Main Fastlane configuration file that imports all lanes
-├── configs.rb            # Environment variables and configurations
 ├── configs_example.rb    # Example configuration file (for reference)
 ├── helpers.rb            # Helper methods used across lanes
 ├── common_lanes.rb       # Common lanes used by both platforms
@@ -100,8 +99,16 @@ apps/
 
 default_platform(:ios)
 
-# Import the shared Fastfile containing the deploy lane logic
-import '../../../../bin/fastlane/Fastfile'
+# Clone the shared Fastfile containing the deploy lane logic
+require 'tmpdir'
+Dir.mktmpdir do |tmpdir|
+  clone_folder = File.join(tmpdir, "fastlane-config")
+  sh("git clone git@github.com:mdikcinar/Fastlane-Configured.git #{clone_folder}")
+  # Import all required files from the cloned repository
+  import "#{clone_folder}/Fastfile"
+end
+
+# Import configs.rb if you created common one for monorepo or default Appfile will be used
 
 platform :ios do
   desc "Deploy production application to TestFlight"
@@ -145,8 +152,16 @@ end
 
 default_platform(:android)
 
-# Import the shared Fastfile containing the deploy lane logic
-import '../../../../bin/fastlane/Fastfile'
+# Clone the shared Fastfile containing the deploy lane logic
+require 'tmpdir'
+Dir.mktmpdir do |tmpdir|
+  clone_folder = File.join(tmpdir, "fastlane-config")
+  sh("git clone git@github.com:mdikcinar/Fastlane-Configured.git #{clone_folder}")
+  # Import all required files from the cloned repository
+  import "#{clone_folder}/Fastfile"
+end
+
+# Import configs.rb if you created common one for monorepo or default Appfile will be used
 
 platform :android do
   desc "Deploy production application to Play Store"
