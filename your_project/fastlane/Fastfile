@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+# Clone the repository to a specific directory
+clone_folder = "fastlane-config"
+sh("rm -rf #{clone_folder}") if Dir.exist?(clone_folder)
+sh("git clone git@github.com:mdikcinar/Fastlane-Configured.git #{clone_folder}")
+
+# Import files from the cloned repository
+import "#{clone_folder}/helpers.rb"
+import "#{clone_folder}/configs.rb"
+import "#{clone_folder}/common_lanes.rb"
+import "#{clone_folder}/android_lanes.rb"
+import "#{clone_folder}/ios_lanes.rb" 
