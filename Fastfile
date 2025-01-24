@@ -1,16 +1,11 @@
 # frozen_string_literal: true
 
-def root_path
-  File.expand_path('..', Dir.pwd)
-end
+# Get the absolute path of the git repository's Fastfile directory
+FASTFILE_PATH = File.expand_path(File.dirname(__FILE__))
 
-def import_root_file(path)
-  import(File.join(root_path, 'fastlane', path))
-end
-
-# Import all required files
-import_root_file 'helpers.rb'
-import_root_file 'configs.rb'
-import_root_file 'common_lanes.rb'
-import_root_file 'android_lanes.rb'
-import_root_file 'ios_lanes.rb'
+# Import files using absolute paths
+import "#{FASTFILE_PATH}/helpers.rb"
+import "#{FASTFILE_PATH}/configs.rb"
+import "#{FASTFILE_PATH}/common_lanes.rb"
+import "#{FASTFILE_PATH}/android_lanes.rb"
+import "#{FASTFILE_PATH}/ios_lanes.rb"
